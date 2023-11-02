@@ -1,0 +1,4 @@
+<div class="produtos">
+    <app-lista-item [listaItem]="itensDaLoja" (adicionarItemAoCarrinho)="adicionarItemAoCarrinho($event)"></app-lista-item>
+    <app-carrinho [carrinho]="carrinho" (incrementarItem)="adicionarItemAoCarrinho($event)" (decrementarItem)="removerItemCarrinho($event)"></app-carrinho>
+</div>

@@ -1,0 +1,15 @@
+.carrinho {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    &__item {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        &__acoes {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+        }
+    }
+}

@@ -1,0 +1,12 @@
+<div *ngIf="item" class="item-card">
+  <img class="item-card__imagem" [src]="item.image" />
+  <span class="item-card__nome">{{ item.name }}</span>
+  <span class="item-card__descricao">{{ item.description }}</span>
+  <span class="item-card__preco">{{ item.price }}</span>
+  <span class="item-card__pontuacao">{{ item.rating }}</span>
+  <div class="item-card__acoes">
+    <button class="item-card__acoes__adicionar" (click)="adicionar()" [disabled]="!item.isAvailable">
+      {{item.isAvailable ? 'ADICIONAR' : 'FORA DE ESTOQUE'}}
+    </button>
+  </div>
+</div>

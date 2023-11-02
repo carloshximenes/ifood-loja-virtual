@@ -1,0 +1,18 @@
+.item-card {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 8px;
+  width: 240px;
+  height: 100%;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  &__imagem {
+    width: 100px;
+    aspect-ratio: 1/1;
+  }
+  &__acoes {
+    margin-top: auto;
+  }
+}
