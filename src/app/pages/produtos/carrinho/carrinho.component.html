@@ -1,14 +1,76 @@
-MEU CARRINHO
-<div *ngIf="carrinho.length === 0" class="carrinho--vazio">
-  Nenhum item no carrinho
-</div>
-<div *ngIf="carrinho.length > 0" class="carrinho">
-  <div class="carrinho__item" *ngFor="let item of carrinho">
-    <span class="carrinho__item__id">{{ item.productId }}</span>
-    <span class="carrinho__item__qtd">{{ item.quantity }}</span>
-    <div class="carrinho__item__acoes">
-        <button class="carrinho__item__acoes__botao" (click)="decrementar(item.productId)">-</button>
-        <button class="carrinho__item__acoes__botao" (click)="incrementar(item.productId)">+</button>
+<!-- COMPONENTIZAR OS INPUT -->
+<!-- COMPONENTIZAR LISTA CARRINHO E CARRINHO ITEM -->
+<!-- UTILIZAR COMPONENTES DO PRIMENG (https://primeng.org/) -->
+
+<p-button
+  (click)="showDialog()"
+  icon="pi pi-external-link"
+  label="Show"
+></p-button>
+<p-dialog
+  header="Carrinho"
+  [(visible)]="visible"
+  class="carrinho__dialog"
+  [closeOnEscape]="false"
+  (onHide)="limparFormulario()"
+  [modal]="true"
+>
+  <p-fieldset legend="Meus itens">
+    <div class="carrinho__lista--vazia" *ngIf="carrinho.length <= 0">
+      Não há itens no carrinho
     </div>
-  </div>
-</div>
+    <div class="carrinho__lista" *ngIf="carrinho.length > 0">
+      <div class="carrinho__lista__item" *ngFor="let item of carrinho">
+        <img [src]="getItemLojaBy(item.productId)?.image" />
+        <span>{{ getItemLojaBy(item.productId)?.name }}</span>
+        <span>qtd {{ item.quantity }}</span>
+        <span>$ {{ getItemLojaBy(item.productId)?.price }}</span>
+        <div class="carrinho__lista__item__acoes">
+          <p-button (click)="decrementar(item.productId)">-</p-button>
+          <p-button (click)="incrementar(item.productId)">+</p-button>
+        </div>
+      </div>
+    </div>
+  </p-fieldset>
+
+  <p-fieldset legend="Dados de Entrega" *ngIf="this.carrinho.length > 0">
+    <form [formGroup]="formularioEntrega" class="form-group">
+      <div class="form-control">
+        <label
+          for="input_username"
+          [ngClass]="{ label_error: !verificarSeEhValido('username') }"
+          >Nome</label
+        >
+        <input
+          id="input_username"
+          type="text"
+          placeholder="Informe seu nome"
+          formControlName="username"
+          [ngClass]="{ input_error: !verificarSeEhValido('username') }"
+        />
+        <span *ngIf="!verificarSeEhValido('username')"
+          >O campo nome é obrigatório</span
+        >
+      </div>
+      <div class="form-control">
+        <label
+          for="input_delivery"
+          [ngClass]="{ label_error: !verificarSeEhValido('delivery') }"
+          >Endereço de Entrega</label
+        >
+        <input
+          id="input_delivery"
+          type="text"
+          placeholder="Informe seu endereço"
+          formControlName="delivery"
+          [ngClass]="{ input_error: !verificarSeEhValido('delivery') }"
+        />
+      </div>
+    </form>
+  </p-fieldset>
+  <p-button
+    [disabled]="this.carrinho.length <= 0"
+    (click)="realizarPedido()"
+    label="Realizar Pedido"
+  />
+</p-dialog>

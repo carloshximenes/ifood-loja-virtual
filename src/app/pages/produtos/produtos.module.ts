@@ -4,12 +4,17 @@ import { ListaItemModule } from './components/lista-item/lista-item.module';
 import { ProdutosComponent } from './produtos.component';
 import { ProdutosService } from './produtos.service';
 import { ProdutosRoutingModule } from './produtos-routing.module';
-import { CarrinhoComponent } from './carrinho/carrinho.component';
+import { CarrinhoModule } from './carrinho/carrinho.module';
 
 @NgModule({
   exports: [ProdutosComponent],
-  declarations: [ProdutosComponent, CarrinhoComponent],
-  imports: [CommonModule, ListaItemModule, ProdutosRoutingModule],
+  declarations: [ProdutosComponent],
+  imports: [
+    CommonModule,
+    ListaItemModule,
+    CarrinhoModule,
+    ProdutosRoutingModule,
+  ],
   providers: [ProdutosService],
 })
 export class ProdutosModule {}
