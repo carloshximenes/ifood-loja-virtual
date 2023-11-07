@@ -3,10 +3,11 @@
 <!-- UTILIZAR COMPONENTES DO PRIMENG (https://primeng.org/) -->
 
 <p-button
+  class="carrinho__botao"
   (click)="showDialog()"
-  icon="pi pi-external-link"
-  label="Show"
-></p-button>
+  icon="pi pi-shopping-cart"
+  >{{ totalItemsCarrinho() }}</p-button
+>
 <p-dialog
   header="Carrinho"
   [(visible)]="visible"

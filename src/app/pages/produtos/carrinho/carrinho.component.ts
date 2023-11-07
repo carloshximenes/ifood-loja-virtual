@@ -72,4 +72,8 @@ export class CarrinhoComponent {
   public limparFormulario(): void {
     this.formularioEntrega.reset();
   }
+
+  public totalItemsCarrinho(): number {
+    return this.carrinho.reduce((acc, val) => (acc += val.quantity), 0);
+  }
 }

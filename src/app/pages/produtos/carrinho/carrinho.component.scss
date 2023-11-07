@@ -9,6 +9,13 @@
       }
     }
   }
+  &__botao {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+    padding: 24px;
+  }
   &__lista {
     display: flex;
     flex-direction: column;
