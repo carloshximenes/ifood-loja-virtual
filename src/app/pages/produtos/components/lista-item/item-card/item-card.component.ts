@@ -9,6 +9,7 @@ import { ItemLojaType } from 'src/types/itemLojaType';
 export class ItemCardComponent {
   @Input() item: ItemLojaType | null = null;
   @Output() adicionarAoCarrinho = new EventEmitter<string>();
+  @Output() verDetalhesItem = new EventEmitter<string>();
   constructor() {}
 
   ngOnInit() {}
@@ -16,5 +17,9 @@ export class ItemCardComponent {
   public adicionar() {
     if (!this.item?.isAvailable) return;
     this.adicionarAoCarrinho.emit(this.item.id);
+  }
+
+  public verDetalhes() {
+    if (this.item) this.verDetalhesItem.emit(this.item.id);
   }
 }

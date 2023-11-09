@@ -9,10 +9,15 @@ import { ItemLojaType } from 'src/types/itemLojaType';
 export class ListaItemComponent {
   @Input() listaItem: ItemLojaType[] = [];
   @Output() adicionarItemAoCarrinho = new EventEmitter<string>();
+  @Output() verDetalhesItem = new EventEmitter<string>();
 
   constructor() {}
 
   public adicionar(id: string): void {
     this.adicionarItemAoCarrinho.emit(id);
+  }
+
+  public verDetalhes(id: string): void {
+    this.verDetalhesItem.emit(id);
   }
 }

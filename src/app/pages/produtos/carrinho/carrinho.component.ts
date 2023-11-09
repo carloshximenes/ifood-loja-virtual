@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ItemPedidoType, PedidoType } from 'src/types/pedidoType';
 import { ProdutosService } from '../produtos.service';
 import { ItemLojaType } from 'src/types/itemLojaType';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-carrinho',
@@ -15,6 +16,7 @@ export class CarrinhoComponent {
   @Output() decrementarItem = new EventEmitter<string>();
 
   public formularioEntrega!: FormGroup;
+  public itensLoja: ItemLojaType[] = [];
 
   constructor(
     private _fb: FormBuilder,
@@ -26,10 +28,19 @@ export class CarrinhoComponent {
       username: [null, Validators.required],
       delivery: [null, Validators.required],
     });
+
+    this._produtosService
+      .getItens()
+      .pipe(take(1))
+      .subscribe({
+        next: (result: ItemLojaType[]) => {
+          this.itensLoja = result;
+        },
+      });
   }
 
   public getItemLojaBy(id: string): ItemLojaType | undefined {
-    return this._produtosService.getItemBy(id);
+    return this.itensLoja.find((item) => item.id === id);
   }
 
   public incrementar(id: string): void {
@@ -66,7 +77,16 @@ export class CarrinhoComponent {
       deliveryAddress: delivery,
       items: [...this.carrinho],
     };
-    console.log(pedido);
+    this._produtosService.realizarPedido(pedido).pipe(take(1)).subscribe({
+      next: (result) => {
+        console.log(result);
+        if(result) {
+          this.carrinho = [];
+          this.visible = false;
+          alert('PEDIDO REALIZADO COM SUCESSO!');
+        }
+      },
+    })
   }
 
   public limparFormulario(): void {

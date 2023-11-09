@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { ProdutosService } from './produtos.service';
 import { ItemLojaType } from 'src/types/itemLojaType';
 import { ItemPedidoType, PedidoType } from 'src/types/pedidoType';
+import { Subscription, take } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SearchParamsType } from 'src/types/searchParams.type';
 
 @Component({
   selector: 'app-produtos',
@@ -11,28 +14,62 @@ import { ItemPedidoType, PedidoType } from 'src/types/pedidoType';
 export class ProdutosComponent {
   public itensDaLoja: ItemLojaType[] = [];
   public carrinho: ItemPedidoType[] = [];
+  public searchForm!: FormGroup;
 
-  constructor(private _service: ProdutosService) {}
+  // public itensDaLojaSubscription!: Subscription;
+
+  constructor(private _service: ProdutosService, private _fb: FormBuilder) {}
 
   ngOnInit() {
-    this.itensDaLoja = this._service.getItens();
+    //   this.itensDaLojaSubscription = this._service.getItens().subscribe({
+    //     next: (result: ItemLojaType[]) => {
+    //       this.itensDaLoja = result;
+    //     },
+    //     error: () => {},
+    //     complete: () => {}
+    //   });
+    // }
+    this.formInit();
+    this.atualizarLista();
   }
 
+  public formInit(): void {
+    this.searchForm = this._fb.group({
+      search: [null],
+    });
+  }
+
+  public atualizarLista(searchParams?: SearchParamsType): void {
+    this._service
+      .getItens(searchParams)
+      .pipe(take(1))
+      .subscribe({
+        next: (result: ItemLojaType[]) => {
+          this.itensDaLoja = result;
+        },
+        error: () => {},
+        complete: () => {},
+      });
+  }
+
+  // ngOnDestroy() {
+  //   if(this.itensDaLojaSubscription) {
+  //     this.itensDaLojaSubscription.unsubscribe();
+  //   }
+  // }
+
   public adicionarItemAoCarrinho(id: string): void {
-    const produtoSelecionado = this._service.getItemBy(id);
-    if (produtoSelecionado) {
-      const indexProduto = this.carrinho.findIndex(
-        (item) => item.productId === id
-      );
-      if (indexProduto > -1) {
-        this.carrinho[indexProduto].quantity++;
-      } else {
-        const novoItemCarrinho: ItemPedidoType = {
-          productId: produtoSelecionado.id,
-          quantity: 1,
-        };
-        this.carrinho.push(novoItemCarrinho);
-      }
+    const indexProduto = this.carrinho.findIndex(
+      (item) => item.productId === id
+    );
+    if (indexProduto > -1) {
+      this.carrinho[indexProduto].quantity++;
+    } else {
+      const novoItemCarrinho: ItemPedidoType = {
+        productId: id,
+        quantity: 1,
+      };
+      this.carrinho.push(novoItemCarrinho);
     }
   }
 
@@ -40,10 +77,27 @@ export class ProdutosComponent {
     const indexProduto = this.carrinho.findIndex(
       (item) => item.productId === id
     );
-    if(this.carrinho[indexProduto].quantity === 1) {
+    if (this.carrinho[indexProduto].quantity === 1) {
       this.carrinho.splice(indexProduto, 1);
     } else {
       this.carrinho[indexProduto].quantity--;
     }
+  }
+
+  public buscarItemFiltrados(): void {
+    const { search } = this.searchForm.value;
+    const searchParams: SearchParamsType = { search };
+    this.atualizarLista(searchParams);
+  }
+
+  public verDetalhesItem(id: string): void {
+    this._service
+      .getItemBy(id)
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          console.log(result);
+        },
+      });
   }
 }

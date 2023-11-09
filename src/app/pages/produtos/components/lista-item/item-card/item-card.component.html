@@ -7,8 +7,18 @@
   <span class="item-card__preco">{{ item.price }}</span>
   <span class="item-card__pontuacao">{{ item.rating }}</span>
   <div class="item-card__acoes">
-    <button class="item-card__acoes__adicionar" (click)="adicionar()" [disabled]="!item.isAvailable">
-      {{item.isAvailable ? 'ADICIONAR' : 'FORA DE ESTOQUE'}}
+    <button
+      class="item-card__acoes__adicionar"
+      (click)="adicionar()"
+      [disabled]="!item.isAvailable"
+    >
+      {{ item.isAvailable ? "ADICIONAR" : "FORA DE ESTOQUE" }}
+    </button>
+    <button
+      class="item-card__acoes__adicionar"
+      (click)="verDetalhes()"
+    >
+      DETALHES
     </button>
   </div>
 </div>

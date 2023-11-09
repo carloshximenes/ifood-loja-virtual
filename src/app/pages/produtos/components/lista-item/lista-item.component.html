@@ -1,3 +1,8 @@
 <div class="lista-item">
-    <app-item-card *ngFor="let item of listaItem" [item]="item" (adicionarAoCarrinho)="adicionar($event)"></app-item-card>
+  <app-item-card
+    *ngFor="let item of listaItem"
+    [item]="item"
+    (adicionarAoCarrinho)="adicionar($event)"
+    (verDetalhesItem)="verDetalhes($event)"
+  ></app-item-card>
 </div>

@@ -1,5 +1,20 @@
 <div class="produtos">
-    <app-lista-item [listaItem]="itensDaLoja" (adicionarItemAoCarrinho)="adicionarItemAoCarrinho($event)"></app-lista-item>
-    ----
-    <app-carrinho [carrinho]="carrinho" (incrementarItem)="adicionarItemAoCarrinho($event)" (decrementarItem)="removerItemCarrinho($event)"></app-carrinho>
+  <form [formGroup]="searchForm">
+    <input
+      type="text"
+      placeholder="Informe o nome do produto..."
+      formControlName="search"
+    />
+    <button type="button" (click)="buscarItemFiltrados()">PESQUISAR</button>
+  </form>
+  <app-lista-item
+    [listaItem]="itensDaLoja"
+    (adicionarItemAoCarrinho)="adicionarItemAoCarrinho($event)"
+    (verDetalhesItem)="verDetalhesItem($event)"
+  ></app-lista-item>
+  <app-carrinho
+    [carrinho]="carrinho"
+    (incrementarItem)="adicionarItemAoCarrinho($event)"
+    (decrementarItem)="removerItemCarrinho($event)"
+  ></app-carrinho>
 </div>
