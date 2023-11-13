@@ -1,0 +1,10 @@
+<div class="login">
+  <form [formGroup]="loginFormGroup" class="login__form">
+    <input type="text" placeholder="Usuário" formControlName="username" />
+    <input type="password" placeholder="Senha" formControlName="password" />
+    <button type="button" (click)="loginClickHandler()">{{ ehLogin ? "Acessar" : "Criar" }}</button>
+    <span (click)="loginToogle()">{{
+      ehLogin ? "Criar nova conta" : "Fazer login"
+    }}</span>
+  </form>
+</div>

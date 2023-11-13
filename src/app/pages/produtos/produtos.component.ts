@@ -29,8 +29,14 @@ export class ProdutosComponent {
     //     complete: () => {}
     //   });
     // }
-    this.formInit();
-    this.atualizarLista();
+
+    // if(localStorage.getItem('usuarioLogado')) {
+      this.formInit();
+      this.atualizarLista();
+    // } else {
+      // window.history.back();
+    // }
+
   }
 
   public formInit(): void {

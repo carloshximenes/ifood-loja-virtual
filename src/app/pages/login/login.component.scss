@@ -1,0 +1,32 @@
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+  &__form {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid black;
+    padding: 32px 16px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        input {
+            height: 45px;
+        }
+        button {
+            margin: 16px 0;
+            height: 45px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        span {
+            color:rgb(50, 50, 169);
+            text-decoration: underline;
+            text-align: center;
+            cursor: pointer;
+        }
+  }
+}
