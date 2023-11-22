@@ -15,6 +15,7 @@ export class ProdutosComponent {
   public itensDaLoja: ItemLojaType[] = [];
   public carrinho: ItemPedidoType[] = [];
   public searchForm!: FormGroup;
+  public isLoadingList: boolean = false;
 
   // public itensDaLojaSubscription!: Subscription;
 
@@ -31,12 +32,11 @@ export class ProdutosComponent {
     // }
 
     // if(localStorage.getItem('usuarioLogado')) {
-      this.formInit();
-      this.atualizarLista();
+    this.formInit();
+    this.atualizarLista();
     // } else {
-      // window.history.back();
+    // window.history.back();
     // }
-
   }
 
   public formInit(): void {
@@ -46,6 +46,8 @@ export class ProdutosComponent {
   }
 
   public atualizarLista(searchParams?: SearchParamsType): void {
+    this.isLoadingList = true;
+
     this._service
       .getItens(searchParams)
       .pipe(take(1))
@@ -53,8 +55,16 @@ export class ProdutosComponent {
         next: (result: ItemLojaType[]) => {
           this.itensDaLoja = result;
         },
-        error: () => {},
-        complete: () => {},
+        error: () => {
+          setTimeout(() => {
+            this.isLoadingList = false;
+          }, 5000);
+        },
+        complete: () => {
+          setTimeout(() => {
+            this.isLoadingList = false;
+          }, 5000);
+        },
       });
   }
 

@@ -7,17 +7,20 @@ import { ProdutosRoutingModule } from './produtos-routing.module';
 import { CarrinhoModule } from './carrinho/carrinho.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HeaderComponent } from 'src/app/components/header/header.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   exports: [ProdutosComponent],
-  declarations: [ProdutosComponent],
+  declarations: [ProdutosComponent, HeaderComponent],
   imports: [
     CommonModule,
     ListaItemModule,
     CarrinhoModule,
     ProdutosRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ProgressSpinnerModule,
   ],
   providers: [ProdutosService],
 })

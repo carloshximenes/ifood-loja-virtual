@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="produtos">
   <form [formGroup]="searchForm">
     <input
@@ -7,14 +8,17 @@
     />
     <button type="button" (click)="buscarItemFiltrados()">PESQUISAR</button>
   </form>
-  <app-lista-item
-    [listaItem]="itensDaLoja"
-    (adicionarItemAoCarrinho)="adicionarItemAoCarrinho($event)"
-    (verDetalhesItem)="verDetalhesItem($event)"
-  ></app-lista-item>
-  <app-carrinho
-    [carrinho]="carrinho"
-    (incrementarItem)="adicionarItemAoCarrinho($event)"
-    (decrementarItem)="removerItemCarrinho($event)"
-  ></app-carrinho>
+  <p-progressSpinner *ngIf="isLoadingList; else listaItem"></p-progressSpinner>
+  <ng-template #listaItem>
+    <app-lista-item
+      [listaItem]="itensDaLoja"
+      (adicionarItemAoCarrinho)="adicionarItemAoCarrinho($event)"
+      (verDetalhesItem)="verDetalhesItem($event)"
+    ></app-lista-item>
+    <app-carrinho
+      [carrinho]="carrinho"
+      (incrementarItem)="adicionarItemAoCarrinho($event)"
+      (decrementarItem)="removerItemCarrinho($event)"
+    ></app-carrinho>
+  </ng-template>
 </div>

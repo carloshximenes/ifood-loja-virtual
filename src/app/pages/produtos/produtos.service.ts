@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_EQUIPAMENTOS, API_PEDIDOS } from 'src/constants/api-url.constant';
@@ -14,6 +14,11 @@ export class ProdutosService {
   constructor(private _http: HttpClient) {}
 
   public getItens(searchParams?: SearchParamsType): Observable<ItemLojaType[]> {
+    // let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+
+    // headers = headers.set('content-type', 'application/json');
+    // headers = headers.set('Authorization', MEU_TOKEN);
+
     let params = new HttpParams();
     if (searchParams) {
       Object.keys(searchParams).map((key: string) => {
